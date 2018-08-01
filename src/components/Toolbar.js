@@ -14,17 +14,13 @@ class Toolbar extends Component {
             unread messages
           </p>
 
-          {/* testing button to select all mail */}
-          {console.log('this props>>', this.props)}
-          {console.log('this props.selectedMessageCheckbox>>', this.props.selectedMessageCheckbox)}
-
-
-          <a className="btn btn-danger">
+          <a className="btn btn-danger"
+            onClick={() => this.props.toggleCompose()}>
             <i className="fa fa-plus"></i>
           </a>
 
           {/*  COMMENT LINE  */}
-          {console.log(this.props, '<<this.props')}
+          {console.log('this.props>>>', this.props)}
 
           <button className="btn btn-default">
             <i onClick={() => this.props.selectedIndicatorFunc()}
@@ -59,8 +55,7 @@ class Toolbar extends Component {
 
           <button
               className="btn btn-default"
-              disabled={`${ this.props.disabledMessageDeleteButton() }`}
-          >
+              disabled={`${ this.props.disabledMessageDeleteButton() }`}>
             <i className="fa fa-trash-o"></i>
           </button>
         </div>

@@ -25,7 +25,6 @@ class MessageList extends Component {
       )
     })
 
-      console.log(this.props.messages);
       return(
         <div>
           {messageList}
