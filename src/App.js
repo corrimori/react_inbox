@@ -10,6 +10,15 @@ class App extends Component {
     messages: []
   }
 
+  // {
+  // "subject": "You can't input the protocol without calculating the mobile RSS protocol!",
+  // "read": false,
+  // "starred": true,
+  // "labels": [ "dev", "personal" ],
+  // "body": "Hey, it's Virginia Mosby,\n\nThe littlest thing can cause a ripple.",
+  // "id": 1
+  // },
+
 async componentDidMount() {
   const response = await fetch('http://localhost:8082/api/messages')
   const json = await response.json()
@@ -102,37 +111,6 @@ async componentDidMount() {
     }
   }
 
-  // markAsReadHandler = () => {
-  //   //if message read = True
-  //   let selectedMessages = this.state.messages.filter( message => { message.selected })
-  //   console.log('selectedMessages>>>>', selectedMessages);
-  //   this.setState( this.state.messages.concat( selectedMessages.map( message => {
-  //     message.read = true
-  //     return message
-  //   })))
-  // }
-
-  // markAsUnread = () => {
-  //   let selectedMessages = this.state.messages.filter( message => { message.selected })
-  //   this.setState( this.state.messages.concat( selectedMessages.map( message => {
-  //     message.read = false
-  //     return message
-  //   })))
-  // }
-  //
-  // markAsReadHandler = () => {
-  //   this.setState({ messages: this.state.messages.map(message => (message.selected ? { ...message, read: true } : message))
-  //   })
-  // }
-
-  // markAsUnreadHandler = () => {
-  //   let selectedMessages = this.state.messages.filter( message => { message.selected })
-  //   this.setState( this.state.messages.concat( selectedMessages.map( message => {
-  //     message.read = false
-  //     return message
-  //   })))
-  // }
-
   markAsReadHandler = () => {
     this.setState({
       messages: this.state.messages.map(message => (
@@ -179,19 +157,64 @@ async componentDidMount() {
     this.setState({ messages })
   }
 
-  // deleteMessage = () => {
-  //   this.setState({
-  //     messages: this.state.message.filter( message => {
-  //       return !message.selected
-  //     })
-  //   })
-  // }
-
   toggleCompose = () => {
     console.log('INSIDE toggleCompose');
     this.setState({composing: !this.state.composing })
   }
 
+// **************************************************
+// tried to write code async without fat arrow
+  // async sendMessage(message) {
+  //   const response = await this.request('/api/messages',
+  //   'POST', {
+  //     subject: message.subject,
+  //     body: message.body,
+  //   })
+  //   const newMessage = await response.json()
+  //
+  //   const messages = [...this.state.messages, newMessage]
+  //   this.setState({
+  //     messages,
+  //     composing: false,
+  //   })
+  // }
+
+// **************************************************
+//
+  sendMessage = async() => {
+    const subject = document.querySelector('#subject').value
+    const body = document.querySelector('#body').value
+    const response = await fetch('http://localhost:8082/api/messages', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        subject,
+        body,
+      })
+    })
+    this.toggleCompose()
+  }
+
+  // sendMessage = async () => {
+  //   const subject = document.querySelector('#subject').value
+  //   const body = document.querySelector('#body').value
+  //   const response =
+  //   await fetch('http://localhost:8082/api/messages', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       subject,
+  //       body,
+  //     })
+  //   })
+  //   this.showComposeTemplate()
+  // }
 
   render() {
 
@@ -213,6 +236,7 @@ async componentDidMount() {
 
         <ComposeMessage
           composing={this.state.composing}
+          sendMessage={this.sendMessage}
         />
 
         <MessageList

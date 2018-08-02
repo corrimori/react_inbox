@@ -2,15 +2,6 @@ import React, { Component } from 'react';
 
 class ComposeMessage extends Component {
 
-  // const submitMessage = ({ people, sendMessage }) => {
-  //   const submitForm = (e) => {
-  //     e.preventDefault()
-  //     sendMessage({
-  //       subject: e.target.subject.value,
-  //       body: e.target.body.value,
-  //     })
-  //   }
-
   render() {
     return (
       <form className={`form-horizontal well ${this.props.composing ? '': 'hidden'}`}>
@@ -37,7 +28,8 @@ class ComposeMessage extends Component {
 
       <div className="form-group">
         <div className="col-sm-8 col-sm-offset-2">
-          <input type="submit" value="Send" className="btn btn-primary" />
+          <input onClick={this.props.sendMessage}
+          type="submit" value="Send" className="btn btn-primary" />
         </div>
       </div>
 
